@@ -12,7 +12,10 @@ $routes->get('logout', 'AuthController::logout');
 
 // Rutas Protegidas (Requieren autenticación)
 $routes->group('', ['filter' => 'auth'], function($routes) {
-    $routes->get('/', 'Home::index');
+    // Apuntamos tanto 'dashboard' como 'facturacion' a tu vista principal
+    $routes->get('dashboard', 'Home::index');
     $routes->get('facturacion', 'Home::index');
-    // Registra aquí los demás módulos protegidos...
+    
+    // Si creas más adelante un controlador específico para facturas, cámbialo aquí:
+    // $routes->get('facturas', 'FacturaController::index');
 });

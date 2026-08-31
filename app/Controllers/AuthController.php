@@ -32,8 +32,11 @@ class AuthController extends BaseController
     }
 
     public function logout()
-    {
-        session()->destroy();
-        return redirect()->to(base_url('login'));
-    }
+{
+    // Destruye los datos de la sesión actual
+    session()->destroy();
+
+    // Muestra la vista personalizada de sesión cerrada
+    return view('auth/logout');
+}
 }

@@ -1,4 +1,3 @@
-<footer class="app-footer">
-    <div class="float-end d-none d-sm-inline">v1.0.0</div>
-    <strong>Copyright &copy; <?= date('Y') ?> <a href="#">Sistema de Facturación</a>.</strong> Todos los derechos reservados.
+<footer class="app-footer bg-white border-top py-3 text-center text-muted small">
+    <strong>Copyright &copy; <?= date('Y') ?> <a href="<?= base_url('facturacion') ?>" class="text-decoration-none text-primary">Sistema de Facturación</a>.</strong> Todos los derechos reservados.
 </footer>
