@@ -35,6 +35,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+    <a href="<?= base_url('categorias') ?>" class="nav-link <?= url_is('categorias*') ? 'active bg-light border-end border-3 border-primary text-primary' : 'text-secondary' ?>">
+        <i class="nav-icon bi bi-tags me-2"></i>
+        <p class="mb-0">Categorías</p>
+    </a>
+</li>
+                        <li class="nav-item">
                             <a href="<?= base_url('facturas') ?>" class="nav-link text-secondary py-1">
                                 <i class="nav-icon bi bi-clock-history me-2"></i>
                                 <p class="mb-0">Historial</p>

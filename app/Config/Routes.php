@@ -18,4 +18,9 @@ $routes->group('', ['filter' => 'auth'], function($routes) {
     
     // Si creas más adelante un controlador específico para facturas, cámbialo aquí:
     // $routes->get('facturas', 'FacturaController::index');
+    // Rutas para Gestión de Categorías
+    $routes->get('categorias', 'CategoriaController::index');
+    $routes->post('categorias/guardar', 'CategoriaController::store');
+    $routes->post('categorias/actualizar/(:num)', 'CategoriaController::update/$1'); // Nota: Asegúrate de usar $routes->post
+    $routes->get('categorias/eliminar/(:num)', 'CategoriaController::delete/$1');
 });
