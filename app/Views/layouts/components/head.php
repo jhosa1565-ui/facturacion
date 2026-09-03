@@ -13,5 +13,8 @@
     <!-- AdminLTE v4 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@adminlte/adminlte@4.0.0-beta2/dist/css/adminlte.min.css">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+
     <?= $this->renderSection('styles') ?>
 </head>

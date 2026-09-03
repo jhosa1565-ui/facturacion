@@ -8,7 +8,7 @@ Administración de Categorías
 <!-- DataTables CSS Bootstrap 5 -->
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 <!-- SweetAlert2 CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>

@@ -10,17 +10,23 @@ $routes->get('login', 'AuthController::index');
 $routes->post('login/authenticate', 'AuthController::authenticate');
 $routes->get('logout', 'AuthController::logout');
 
-// Rutas Protegidas (Requieren autenticación)
+// Rutas Protegidas que cargan vistas HTML (Solo filtro 'auth')
 $routes->group('', ['filter' => 'auth'], function($routes) {
-    // Apuntamos tanto 'dashboard' como 'facturacion' a tu vista principal
     $routes->get('dashboard', 'Home::index');
     $routes->get('facturacion', 'Home::index');
     
-    // Si creas más adelante un controlador específico para facturas, cámbialo aquí:
-    // $routes->get('facturas', 'FacturaController::index');
-    // Rutas para Gestión de Categorías
+    // Vista principal de Categorías (Carga HTML normal)
     $routes->get('categorias', 'CategoriaController::index');
-    $routes->post('categorias/guardar', 'CategoriaController::store');
-    $routes->post('categorias/actualizar/(:num)', 'CategoriaController::update/$1'); // Nota: Asegúrate de usar $routes->post
-    $routes->get('categorias/eliminar/(:num)', 'CategoriaController::delete/$1');
+});
+
+// Rutas Protegidas que requieren AJAX y Autenticación (Para DataTables y llamadas asíncronas)
+$routes->group('categorias', ['filter' => ['auth', 'ajax']], function($routes) {
+    $routes->get('listarAjax', 'CategoriaController::listarAjax');
+});
+
+// Rutas de acciones (Guardar, Actualizar, Eliminar) protegidas por auth (pueden ser peticiones normales por formulario o POST)
+$routes->group('categorias', ['filter' => 'auth'], function($routes) {
+    $routes->post('guardar', 'CategoriaController::store');
+    $routes->post('actualizar/(:num)', 'CategoriaController::update/$1');
+    $routes->get('eliminar/(:num)', 'CategoriaController::delete/$1');
 });
