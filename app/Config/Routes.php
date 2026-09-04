@@ -10,23 +10,26 @@ $routes->get('login', 'AuthController::index');
 $routes->post('login/authenticate', 'AuthController::authenticate');
 $routes->get('logout', 'AuthController::logout');
 
-// Rutas Protegidas que cargan vistas HTML (Solo filtro 'auth')
+// 1. Rutas Protegidas que SÍ muestran vistas HTML (Solo filtro 'auth')
 $routes->group('', ['filter' => 'auth'], function($routes) {
     $routes->get('dashboard', 'Home::index');
     $routes->get('facturacion', 'Home::index');
     
-    // Vista principal de Categorías (Carga HTML normal)
+    // Vistas principales
     $routes->get('categorias', 'CategoriaController::index');
+    $routes->get('marcas', 'MarcaController::index'); // <--- Vista HTML de Marcas
 });
 
-// Rutas Protegidas que requieren AJAX y Autenticación (Para DataTables y llamadas asíncronas)
-$routes->group('categorias', ['filter' => ['auth', 'ajax']], function($routes) {
-    $routes->get('listarAjax', 'CategoriaController::listarAjax');
-});
-
-// Rutas de acciones (Guardar, Actualizar, Eliminar) protegidas por auth (pueden ser peticiones normales por formulario o POST)
+// 2. Rutas de Categorías (Acciones)
 $routes->group('categorias', ['filter' => 'auth'], function($routes) {
     $routes->post('guardar', 'CategoriaController::store');
     $routes->post('actualizar/(:num)', 'CategoriaController::update/$1');
     $routes->get('eliminar/(:num)', 'CategoriaController::delete/$1');
+});
+
+// 3. Rutas de Marcas (Acciones: Guardar, Actualizar, Eliminar)
+$routes->group('marcas', ['filter' => 'auth'], function($routes) {
+    $routes->post('guardar', 'MarcaController::guardar');
+    $routes->post('actualizar/(:num)', 'MarcaController::guardar/$1');
+    $routes->get('eliminar/(:num)', 'MarcaController::eliminar/$1');
 });
