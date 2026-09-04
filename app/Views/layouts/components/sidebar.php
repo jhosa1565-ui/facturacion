@@ -46,6 +46,13 @@
         <p>Marcas</p>
     </a>
 </li>
+<!-- Clientes -->
+<li class="nav-item">
+    <a href="<?= base_url('clientes') ?>" class="nav-link <?= url_is('clientes*') ? 'active' : '' ?>">
+        <i class="nav-icon bi bi-people-fill"></i>
+        <p>Clientes</p>
+    </a>
+</li>
                         <li class="nav-item">
                             <a href="<?= base_url('facturas') ?>" class="nav-link text-secondary py-1">
                                 <i class="nav-icon bi bi-clock-history me-2"></i>

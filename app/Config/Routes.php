@@ -33,3 +33,12 @@ $routes->group('marcas', ['filter' => 'auth'], function($routes) {
     $routes->post('actualizar/(:num)', 'MarcaController::guardar/$1');
     $routes->get('eliminar/(:num)', 'MarcaController::eliminar/$1');
 });
+
+// 1. Ruta Protegida de vista HTML para Clientes (dentro del grupo de vistas)
+$routes->get('clientes', 'ClienteController::index');
+
+// 2. Grupo de Rutas de acciones de Clientes (Guardar, Eliminar)
+$routes->group('clientes', ['filter' => 'auth'], function($routes) {
+    $routes->post('guardar', 'ClienteController::guardar');
+    $routes->get('eliminar/(:num)', 'ClienteController::eliminar/$1');
+});
