@@ -42,3 +42,12 @@ $routes->group('clientes', ['filter' => 'auth'], function($routes) {
     $routes->post('guardar', 'ClienteController::guardar');
     $routes->get('eliminar/(:num)', 'ClienteController::eliminar/$1');
 });
+
+// Vista HTML de Proveedores
+$routes->get('proveedores', 'ProveedorController::index');
+
+// Grupo de acciones de Proveedores
+$routes->group('proveedores', ['filter' => 'auth'], function($routes) {
+    $routes->post('guardar', 'ProveedorController::guardar');
+    $routes->get('eliminar/(:num)', 'ProveedorController::eliminar/$1');
+});

@@ -53,6 +53,13 @@
         <p>Clientes</p>
     </a>
 </li>
+<!-- Proveedores -->
+<li class="nav-item">
+    <a href="<?= base_url('proveedores') ?>" class="nav-link <?= url_is('proveedores*') ? 'active' : '' ?>">
+        <i class="nav-icon bi bi-truck"></i>
+        <p>Proveedores</p>
+    </a>
+</li>
                         <li class="nav-item">
                             <a href="<?= base_url('facturas') ?>" class="nav-link text-secondary py-1">
                                 <i class="nav-icon bi bi-clock-history me-2"></i>
