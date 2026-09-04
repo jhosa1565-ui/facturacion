@@ -60,6 +60,13 @@
         <p>Proveedores</p>
     </a>
 </li>
+<!-- Usuarios -->
+<li class="nav-item">
+    <a href="<?= base_url('usuarios') ?>" class="nav-link <?= url_is('usuarios*') ? 'active' : '' ?>">
+        <i class="nav-icon bi bi-people"></i>
+        <p>Usuarios</p>
+    </a>
+</li>
                         <li class="nav-item">
                             <a href="<?= base_url('facturas') ?>" class="nav-link text-secondary py-1">
                                 <i class="nav-icon bi bi-clock-history me-2"></i>
