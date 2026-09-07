@@ -60,3 +60,23 @@ $routes->group('usuarios', ['filter' => 'auth'], function($routes) {
     $routes->post('guardar', 'UsuarioController::guardar');
     $routes->get('eliminar/(:num)', 'UsuarioController::eliminar/$1');
 });
+
+$routes->get('productos', 'ProductoController::index');
+$routes->group('productos', ['filter' => 'auth'], function($routes) {
+    $routes->post('guardar', 'ProductoController::guardar');
+    $routes->get('eliminar/(:num)', 'ProductoController::eliminar/$1');
+});
+
+// En el grupo de vistas HTML protegidas:
+$routes->get('facturas/nueva', 'VentaController::nueva');
+
+// En el grupo exclusivo para AJAX/POST con filtros auth y ajax:
+$routes->get('facturas/buscar-cliente', 'VentaController::buscarCliente');
+$routes->get('facturas/buscar-producto', 'VentaController::buscarProducto');
+$routes->post('facturas/guardar', 'VentaController::guardar');
+
+$routes->get('facturas/nueva', 'VentaController::nueva');
+$routes->get('facturas/buscar-cliente', 'VentaController::buscarCliente');
+$routes->get('facturas/buscar-producto', 'VentaController::buscarProducto');
+$routes->post('facturas/guardar', 'VentaController::guardar');
+

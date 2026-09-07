@@ -67,6 +67,39 @@
         <p>Usuarios</p>
     </a>
 </li>
+<!-- Productos -->
+<li class="nav-item">
+    <a href="<?= base_url('productos') ?>" class="nav-link <?= url_is('productos*') ? 'active' : '' ?>">
+        <i class="nav-icon bi bi-box-seam"></i>
+        <p>Productos</p>
+    </a>
+</li>
+<!-- Facturación -->
+<li class="nav-item <?= url_is('facturas*') ? 'menu-open' : '' ?>">
+    <a href="#" class="nav-link <?= url_is('facturas*') ? 'active' : '' ?>">
+        <i class="nav-icon bi bi-receipt-cutoff"></i>
+        <p>
+            Facturación
+            <i class="nav-arrow bi bi-chevron-right"></i>
+        </p>
+    </a>
+    <ul class="nav nav-treeview">
+        <!-- Nueva factura -->
+        <li class="nav-item">
+            <a href="<?= base_url('facturas/nueva') ?>" class="nav-link <?= url_is('facturas/nueva') ? 'active' : '' ?>">
+                <i class="nav-icon bi bi-plus-circle"></i>
+                <p>Nueva Factura</p>
+            </a>
+        </li>
+        <!-- Historial -->
+        <li class="nav-item">
+            <a href="<?= base_url('facturas') ?>" class="nav-link <?= url_is('facturas') ? 'active' : '' ?>">
+                <i class="nav-icon bi bi-clock-history"></i>
+                <p>Historial</p>
+            </a>
+        </li>
+    </ul>
+</li>
                         <li class="nav-item">
                             <a href="<?= base_url('facturas') ?>" class="nav-link text-secondary py-1">
                                 <i class="nav-icon bi bi-clock-history me-2"></i>
