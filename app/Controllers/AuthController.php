@@ -1,5 +1,8 @@
 <?php
+
 namespace App\Controllers;
+
+use App\Models\UsuarioModel;
 
 class AuthController extends BaseController
 {
@@ -14,29 +17,45 @@ class AuthController extends BaseController
 
     public function authenticate()
     {
-        $username = $this->request->getPost('username');
+        $correo = trim($this->request->getPost('username')); // Asegúrate de que tu input en el login se llame 'correo'
         $password = $this->request->getPost('password');
 
-        // Validacion estática temporal
-        if ($username === 'admin' && $password === 'admin') {
-            session()->set([
-                'username'   => 'admin',
-                'name'       => 'Usuario Administrador',
-                'isLoggedIn' => true
-            ]);
+        $usuarioModel = new UsuarioModel();
+       
+        // Buscar el usuario en la base de datos por su correo
+        $usuario = $usuarioModel->where('correo', $correo)->first();
 
-            return redirect()->to(base_url('facturacion'));
+        if ($usuario) {
+       
+            // Verificar la contraseña encriptada usando password_verify contra la columna 'clave'
+            if (password_verify($password, $usuario['clave'])) {
+                
+                // Opcional: Validar si el usuario está activo (estado = 1)
+                if (isset($usuario['estado']) && $usuario['estado'] == 0) {
+                    return redirect()->back()->withInput()->with('error', 'Tu cuenta se encuentra inactiva.');
+                }
+
+                // Registrar los datos reales en la sesión
+                session()->set([
+                    'id_usuario' => $usuario['id_usuario'],
+                    'nombre'     => $usuario['nombre'],
+                    'correo'     => $usuario['correo'],
+                    'rol'        => $usuario['rol'],
+                    'isLoggedIn' => true
+                ]);
+
+                return redirect()->to(base_url('facturacion'));
+            }
         }
-
-        return redirect()->back()->with('error', 'Usuario o contraseña incorrectos.');
+        return redirect()->back()->withInput()->with('error', 'Correo o contraseña incorrectos.');
     }
 
     public function logout()
-{
-    // Destruye los datos de la sesión actual
-    session()->destroy();
+    {
+        // Destruye los datos de la sesión actual
+        session()->destroy();
 
-    // Muestra la vista personalizada de sesión cerrada
-    return view('auth/logout');
-}
+        // Muestra la vista personalizada de sesión cerrada
+        return view('auth/logout');
+    }
 }
