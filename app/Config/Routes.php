@@ -80,3 +80,16 @@ $routes->get('facturas/buscar-cliente', 'VentaController::buscarCliente');
 $routes->get('facturas/buscar-producto', 'VentaController::buscarProducto');
 $routes->post('facturas/guardar', 'VentaController::guardar');
 
+// Rutas exclusivas para Administradores (Categorías, Productos, Proveedores, Usuarios, etc.)
+$routes->group('', ['filter' => 'role:administrador'], function($routes) {
+    $routes->resource('categorias', ['controller' => 'CategoriaController']);
+    $routes->resource('productos', ['controller' => 'ProductoController']);
+    $routes->resource('proveedores', ['controller' => 'ProveedorController']);
+    $routes->resource('usuarios', ['controller' => 'UsuarioController']);
+    $routes->resource('marcas', ['controller' => 'MarcaController']);
+});
+
+// Rutas accesibles tanto para Administradores como para Encargados (Facturación / Ventas)
+$routes->group('', ['filter' => 'role:administrador,encargado'], function($routes) {
+    $routes->resource('facturacion', ['controller' => 'VentaController']); // o FacturacionController
+});

@@ -36,13 +36,14 @@ class AuthController extends BaseController
                 }
 
                 // Registrar los datos reales en la sesión
-                session()->set([
+                $datosSesion = [
                     'id_usuario' => $usuario['id_usuario'],
                     'nombre'     => $usuario['nombre'],
                     'correo'     => $usuario['correo'],
-                    'rol'        => $usuario['rol'],
+                    'rol'        => $usuario['rol'], // 'administrador' o 'encargado'
                     'isLoggedIn' => true
-                ]);
+                ];
+                session()->set($datosSesion);
 
                 return redirect()->to(base_url('facturacion'));
             }
