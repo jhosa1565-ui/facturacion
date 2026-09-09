@@ -97,3 +97,12 @@ $routes->group('facturas', ['filter' => 'auth'], function($routes) {
     $routes->get('buscar-producto', 'VentaController::buscarProducto');
     $routes->post('guardar', 'VentaController::guardar');
 });
+
+// Módulo de Compras
+$routes->group('compras', ['filter' => 'auth'], function($routes) {
+    $routes->get('nueva', 'CompraController::nueva');
+    $routes->get('', 'CompraController::index');
+    $routes->get('buscar-proveedor', 'CompraController::buscarProveedor');
+    $routes->get('buscar-producto', 'CompraController::buscarProducto');
+    $routes->post('guardar', 'CompraController::guardar');
+});

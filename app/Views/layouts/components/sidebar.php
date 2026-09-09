@@ -95,6 +95,24 @@
                         </li>
                     </ul>
                 </li>
+                <!-- Menú de Compras -->
+<li class="nav-item">
+    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="collapse" data-bs-target="#menuCompras">
+        <i class="bi bi-cart-plus"></i> Compras
+    </a>
+    <ul class="collapse list-unstyled ps-3" id="menuCompras">
+        <li>
+            <a href="<?= base_url('compras/nueva') ?>" class="nav-link">
+                <i class="bi bi-plus-circle"></i> Nueva Compra
+            </a>
+        </li>
+        <li>
+            <a href="<?= base_url('compras') ?>" class="nav-link">
+                <i class="bi bi-clock-history"></i> Historial
+            </a>
+        </li>
+    </ul>
+</li>
 
             </ul>
         </nav>

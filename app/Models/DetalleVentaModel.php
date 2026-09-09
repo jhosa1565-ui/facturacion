@@ -4,8 +4,21 @@ use CodeIgniter\Model;
 
 class DetalleVentaModel extends Model
 {
-    protected $table = 'detalle_venta';
+    protected $table      = 'detalle_venta';
     protected $primaryKey = 'id_detalle_venta';
-    protected $allowedFields = ['id_venta', 'id_producto', 'cantidad', 'precio_unitario', 'subtotal'];
+
+    protected $useAutoIncrement = true;
+
+    protected $returnType     = 'array';
+    protected $useSoftDeletes = false;
+
+    protected $allowedFields = [
+        'id_venta',
+        'id_producto',
+        'cantidad',
+        'precio_unitario',
+        'subtotal'
+    ];
+
     protected $useTimestamps = false;
 }

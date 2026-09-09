@@ -27,6 +27,11 @@ class VentaController extends BaseController
         return view('facturacion/index');
     }
 
+    public function nueva()
+    {
+        return view('facturacion/index');
+    }
+
     public function buscarCliente()
     {
         $term = $this->request->getGet('q');
@@ -68,10 +73,8 @@ class VentaController extends BaseController
             
             $idCliente = $json['id_cliente'] ?? null;
             $items = $json['items'] ?? [];
-            $subtotal = $json['subtotal'] ?? 0;
-            $impuesto = $json['impuesto'] ?? 0;
             $total = $json['total'] ?? 0;
-            $idUsuario = session()->get('id_usuario') ?? 1; // Ajusta según tu sesión
+            $idUsuario = session()->get('id_usuario') ?? 1;
 
             if (!$idCliente || empty($items)) {
                 return $this->response->setJSON(['status' => 'error', 'message' => 'Datos incompletos para procesar la venta.']);
@@ -81,9 +84,8 @@ class VentaController extends BaseController
             $idVenta = $this->ventaModel->insert([
                 'id_cliente' => $idCliente,
                 'id_usuario' => $idUsuario,
-                'subtotal'   => $subtotal,
-                'impuesto'   => $impuesto,
-                'total'      => $total
+                'total'      => $total,
+                'fecha'      => date('Y-m-d H:i:s')
             ]);
 
             // 2. Guardar Detalle y Descontar Stock
@@ -98,7 +100,6 @@ class VentaController extends BaseController
                     ]);
                 }
 
-                // Insertar detalle con la llave primaria exacta 'id_detalle_venta'
                 $this->detalleVentaModel->insert([
                     'id_venta'        => $idVenta,
                     'id_producto'     => $item['id_producto'],
@@ -107,7 +108,6 @@ class VentaController extends BaseController
                     'subtotal'        => $item['subtotal']
                 ]);
 
-                // Descontar Stock
                 $nuevoStock = $producto['stock'] - $item['cantidad'];
                 $this->productoModel->update($item['id_producto'], ['stock' => $nuevoStock]);
             }
