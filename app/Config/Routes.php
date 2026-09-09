@@ -106,3 +106,5 @@ $routes->group('compras', ['filter' => 'auth'], function($routes) {
     $routes->get('buscar-producto', 'CompraController::buscarProducto');
     $routes->post('guardar', 'CompraController::guardar');
 });
+
+$routes->get('facturas/pdf/(:num)', 'VentaController::pdf/$1');

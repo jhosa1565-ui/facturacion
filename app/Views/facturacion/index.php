@@ -238,7 +238,7 @@ document.addEventListener('DOMContentLoaded', function() {
         $('#lblTotal').text('$' + total.toFixed(2));
     }
 
-    // 4. Concretar Factura
+    // 4. Concretar Factura y Abrir PDF
     $('#btnProcesarVenta').on('click', function() {
         let idCliente = $('#id_cliente').val();
         if(!idCliente) {
@@ -254,7 +254,6 @@ document.addEventListener('DOMContentLoaded', function() {
         let impuesto = subtotalGeneral * 0.15;
         let total = subtotalGeneral + impuesto;
 
-        // Mapeamos el carrito asegurando que cada objeto lleve explícitamente su 'subtotal'
         let itemsMapeados = carrito.map(i => ({
             id_producto: i.id_producto,
             cantidad: i.cantidad,
@@ -285,9 +284,22 @@ document.addEventListener('DOMContentLoaded', function() {
                     headers: { '<?= csrf_header() ?>': '<?= csrf_hash() ?>' },
                     success: function(response) {
                         if(response.status === 'success') {
-                            Swal.fire('¡Éxito!', response.message, 'success').then(() => {
-                                window.location.href = '<?= base_url('facturas/nueva') ?>';
+                            Swal.fire({
+                                title: '¡Éxito!',
+                                text: response.message,
+                                icon: 'success',
+                                timer: 1500,
+                                showConfirmButton: false
                             });
+
+                            // Abrir el PDF en una pestaña nueva usando el ID devuelto
+                            window.open('<?= base_url('facturas/pdf/') ?>' + response.id_venta, '_blank');
+
+                            // Recargar la página para limpiar el formulario de venta
+                            setTimeout(() => {
+                                window.location.href = '<?= base_url('facturas/nueva') ?>';
+                            }, 1500);
+
                         } else {
                             Swal.fire('Error', response.message, 'error');
                         }
