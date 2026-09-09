@@ -22,9 +22,9 @@ class VentaController extends BaseController
         $this->clienteModel = new ClienteModel();
     }
 
-    public function nueva()
+    public function index()
     {
-        return view('facturacion/nueva');
+        return view('facturacion/index');
     }
 
     public function buscarCliente()
