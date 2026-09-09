@@ -163,29 +163,58 @@ document.addEventListener("DOMContentLoaded", function () {
     var salesChartCanvas = document.getElementById('salesChart').getContext('2d');
     
     new Chart(salesChartCanvas, {
-      type: 'line',
-      data: {
-        labels: labels.length > 0 ? labels : ['Sin datos'],
-        datasets: [
-          {
-            label: 'Transacciones',
-            backgroundColor: 'rgba(60,141,188,0.1)',
-            borderColor: 'rgba(60,141,188,1)',
-            data: ventas.length > 0 ? ventas : [0]
-          },
-          {
-            label: 'Ingresos ($)',
-            backgroundColor: 'rgba(40, 167, 69, 0.1)',
-            borderColor: 'rgba(40, 167, 69, 1)',
-            data: ingresos.length > 0 ? ingresos : [0]
-          }
-        ]
-      },
-      options: {
-        maintainAspectRatio: false,
-        responsive: true,
-        scales: { y: { beginAtZero: true } }
-      }
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Transacciones',
+                    backgroundColor: 'rgba(60,141,188,0.1)',
+                    borderColor: 'rgba(60,141,188,1)',
+                    data: ventas,
+                    yAxisID: 'y', // Usa el eje izquierdo
+                    tension: 0.3
+                },
+                {
+                    label: 'Ingresos ($)',
+                    backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                    borderColor: 'rgba(40, 167, 69, 1)',
+                    data: ingresos,
+                    yAxisID: 'y1', // Usa el eje derecho para evitar que aplaste la otra línea
+                    tension: 0.3
+                }
+            ]
+        },
+        options: {
+            maintainAspectRatio: false,
+            responsive: true,
+            scales: {
+                y: {
+                    type: 'linear',
+                    position: 'left',
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
+                    },
+                    title: {
+                        display: true,
+                        text: 'Transacciones'
+                    }
+                },
+                y1: {
+                    type: 'linear',
+                    position: 'right',
+                    beginAtZero: true,
+                    grid: {
+                        drawOnChartArea: false // Evita que se solapen las líneas de la cuadrícula
+                    },
+                    title: {
+                        display: true,
+                        text: 'Ingresos ($)'
+                    }
+                }
+            }
+        }
     });
 });
 </script>

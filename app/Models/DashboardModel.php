@@ -42,15 +42,30 @@ class DashboardModel extends Model
     }
 
     public function getVentasUltimos7Dias()
-    {
-        return $this->db->query("
-            SELECT DATE(fecha) as fecha, COUNT(*) as transacciones, SUM(total) as ingresos 
-            FROM venta 
-            WHERE fecha >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) 
-            GROUP BY DATE(fecha) 
-            ORDER BY fecha ASC
-        ")->getResultArray();
+{
+    $db = \Config\Database::connect();
+    $data = [];
+
+    // Recorrer los últimos 7 días hacia atrás
+    for ($i = 6; $i >= 0; $i--) {
+        $fecha = date('Y-m-d', strtotime("-$i days"));
+        
+        // Consultar ventas y sumar ingresos de ese día específico
+        $builder = $db->table('venta');
+        $builder->select('COUNT(id_venta) as transacciones, COALESCE(SUM(total), 0) as ingresos');
+        $builder->where('DATE(fecha) >=', $fecha);
+        $builder->where('DATE(fecha) <=', $fecha);
+        $resultado = $builder->get()->getRowArray();
+
+        $data[] = [
+            'fecha'         => date('d/m', strtotime($fecha)), // Formato día/mes más limpio
+            'transacciones' => intval($resultado['transacciones'] ?? 0),
+            'ingresos'      => floatval($resultado['ingresos'] ?? 0)
+        ];
     }
+
+    return $data;
+}
 
     public function getProductosMasVendidos($limit = 5)
     {
